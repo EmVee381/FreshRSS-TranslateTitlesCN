@@ -41,6 +41,10 @@ class TranslateTitlesExtension extends Minz_Extension {
         if (is_null(FreshRSS_Context::$user_conf->LibreApiKey)) {
             FreshRSS_Context::$user_conf->LibreApiKey = '';
         }
+        if (is_null(FreshRSS_Context::$user_conf->TargetLanguageCode)) {
+            FreshRSS_Context::$user_conf->TargetLanguageCode = 'zh';
+        }
+
 
         FreshRSS_Context::$user_conf->save();
 
@@ -73,6 +77,10 @@ class TranslateTitlesExtension extends Minz_Extension {
 
             $libreApiKey = Minz_Request::param('LibreApiKey', '');
             FreshRSS_Context::$user_conf->LibreApiKey = $libreApiKey;
+
+            $targetLanguageCode = Minz_Request::param('TargetLanguageCode', '');
+            FreshRSS_Context::$user_conf->TargetLanguageCode = $targetLanguageCode;
+
 
             // 保存并记录结果
             $saveResult = FreshRSS_Context::$user_conf->save();

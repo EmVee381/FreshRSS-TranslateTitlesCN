@@ -5,6 +5,7 @@ class TranslationService {
     private $googleBaseUrl;
     private $libreBaseUrl;
     private $libreApiKey;
+    private $targetLanguageCode;
 
     public function __construct($serviceType) {
         $this->serviceType = $serviceType;
@@ -12,6 +13,7 @@ class TranslationService {
         $this->googleBaseUrl = 'https://translate.googleapis.com/translate_a/single';
         $this->libreBaseUrl = FreshRSS_Context::$user_conf->LibreApiUrl;
         $this->libreApiKey = FreshRSS_Context::$user_conf->LibreApiKey;
+        $this->targetLanguageCode = FreshRSS_Context::$user_conf->TargetLanguageCode;
     }
 
     public function translate($text) {
@@ -114,7 +116,7 @@ class TranslationService {
         $queryParams = http_build_query([
             'client' => 'gtx',
             'sl' => 'auto',     // 源语言设置为自动检测
-            'tl' => 'zh',       // 目标语言设置为中文
+            'tl' => $this->targetLanguageCode?$this->targetLanguageCode:'zh',       // 目标语言设置为中文
             'dt' => 't',
             'q' => $text,
         ]);
